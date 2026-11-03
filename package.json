@@ -1,0 +1,31 @@
+{
+  "name": "react-nestjs-microservices-demo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "React + NestJS 微服务学习 Demo",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "build:shared": "npm run build -w @demo/shared",
+    "build:services": "npm run build -w @demo/shared && npm run build -w @demo/users-service && npm run build -w @demo/orders-service && npm run build -w @demo/gateway",
+    "start:users": "npm run start:dev -w @demo/users-service",
+    "start:orders": "npm run start:dev -w @demo/orders-service",
+    "start:gateway": "npm run start:dev -w @demo/gateway",
+    "start:services": "concurrently -k -n users,orders,gateway -c blue,magenta,green \"npm run start:users\" \"npm run start:orders\" \"npm run start:gateway\"",
+    "start:web": "npm run dev -w @demo/web",
+    "start:all": "concurrently -k -n users,orders,gateway,web -c blue,magenta,green,cyan \"npm run start:users\" \"npm run start:orders\" \"npm run start:gateway\" \"npm run start:web\"",
+    "install:all": "npm install"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "allowScripts": {
+    "esbuild@0.25.12": true
+  }
+}
